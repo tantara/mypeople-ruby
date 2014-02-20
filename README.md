@@ -20,7 +20,7 @@ Or install it yourself as:
 
 ### Setup
 
-	// config/initialize/mypeople.rb
+	# config/initialize/mypeople.rb
 	Mypeople.configure do |config|
 		config.host = "https://api.daum.net"
 		config.key = "다음 API 콘솔에서 발급 받은 키"
