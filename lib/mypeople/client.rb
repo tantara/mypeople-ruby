@@ -1,6 +1,7 @@
 require 'net/http'
 require 'forwardable'
 require 'openssl'
+require 'json'
 
 module Mypeople
   class Configuration
@@ -78,14 +79,14 @@ module Mypeople
       data = URI.encode_www_form(data)
       resp, body = http.send_request("GET", "#{path}?#{data}")
 
-      resp.body
+      JSON.parse(resp.body)
     end
 
     def post(http, path, data)
       data = URI.encode_www_form(data)
       resp, body = http.send_request("POST", path, data)
 
-      resp.body
+      JSON.parse(resp.body)
     end
 
     def send_message_to_buddy(buddy_id, content, attach = nil) 
