@@ -63,30 +63,38 @@ module Mypeople
       @configuration ||= Configuration.new
     end
 
-    def request(method, path, data)
+    def request(method, path, data, json = true)
       http = configuration.http
       data = configuration.data.merge(data)
 
       case method
       when "GET"
-        get(http, path, data)
+        get(http, path, data, json)
       when "POST"
-        post(http, path, data)
+        post(http, path, data, json)
       end
     end
 
-    def get(http, path, data)
+    def get(http, path, data, json)
       data = URI.encode_www_form(data)
       resp, body = http.send_request("GET", "#{path}?#{data}")
 
-      JSON.parse(resp.body)
+      if json
+        JSON.parse(resp.body)
+      else
+        resp.body
+      end
     end
 
-    def post(http, path, data)
+    def post(http, path, data, json)
       data = URI.encode_www_form(data)
       resp, body = http.send_request("POST", path, data)
 
-      JSON.parse(resp.body)
+      if json
+        JSON.parse(resp.body)
+      else
+        resp.body
+      end
     end
 
     def send_message_to_buddy(buddy_id, content, attach = nil) 
@@ -148,14 +156,14 @@ module Mypeople
       request(method, path, data)
     end
 
-    def download_file(file_id, file_name)
+    def download_file(file_id)
       method = APIS[:download_file][:method]
       path = APIS[:download_file][:path]
       data = {
         "fileId" => file_id
       }
 
-      request(method, path, data)
+      request(method, path, data, false)
     end
   end
 end

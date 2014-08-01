@@ -23,7 +23,10 @@ TEST_FILE_ID = "myp_pub:XXXXX"
 #puts Mypeople::Member.find(TEST_USER_ID)
 
 # 파일
-#puts Mypeople::File.download(TEST_FILE_ID, "profile.jpg")
+#stream = Mypeople::File.download(TEST_FILE_ID)
+#f = File.new("test.jpg", "w")
+#f.write(stream)
+#f.close
 
 # 친구(1:1)에게 메세지 보내기
 #Mypeople::Member.send(TEST_USER_ID, TEST_CONTENT)
